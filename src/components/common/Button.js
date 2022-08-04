@@ -6,9 +6,11 @@ const Button = styled.button`
     background-color: rgba(82, 182, 255, 1);
     border-radius: 4.64px;
     font-size: 15.98px;
+    border: none;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: rgba(255, 255, 255, 1);
 
     ${({ large }) => large ? `
         width: 303px;
