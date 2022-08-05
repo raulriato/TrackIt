@@ -3,11 +3,15 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ThreeDots } from 'react-loader-spinner'
+import { useContext } from "react";
+import UserContext from "../contexts/UserContext";
 import { Button, Input, StyledLink } from "./common";
 import logo from '../assets/images/logo.png';
 
 
 export default function Login() {
+
+    const {config, setConfig } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -16,7 +20,7 @@ export default function Login() {
         password: ''
     })
     const [disabled, setDisabled] = useState(false);
-    let authorization = 'Bearer ';
+
     function handleInput(e) {
         setLogin({
             ...login,
@@ -29,10 +33,11 @@ export default function Login() {
         setDisabled(!disabled);
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', login);
         promise.then(response => {
-            authorization += response.data.token;
-            navigate('/habits', { state: {
-                Authorization: authorization
-            } })
+            setConfig({
+                ...config,
+                Authorization: config.Authorization += response.data.token
+            })
+            navigate('/habits')
         })
     }
 
@@ -50,6 +55,7 @@ export default function Login() {
                 disabled={disabled}
                 />
                 <Input
+                type='password'
                 placeholder="senha"
                 name='password'
                 onChange={handleInput}
