@@ -11,6 +11,7 @@ const Button = styled.button`
     justify-content: center;
     align-items: center;
     color: rgba(255, 255, 255, 1);
+    cursor: pointer;
 
     ${({ large }) => large ? `
         width: 303px;
@@ -23,6 +24,11 @@ const Button = styled.button`
         width: 40px;
         font-size: 26.98px;
     `: ''}
+
+    ${({ disabled }) => disabled ? `
+        opacity: 0.7;
+        cursor: initial;
+    ` : ''}
 `;
 
 export default Button;

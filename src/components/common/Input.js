@@ -15,6 +15,15 @@ const Input = styled.input`
     &:focus {
         outline: 0;
     }
+
+    ${({ disabled }) => disabled ? `
+        background-color: rgba(242, 242, 242, 1);
+        border: 1px solid rgba(212, 212, 212, 1);
+
+        &::placeholder {
+            color: rgba(175, 175, 175, 1);
+        }
+    ` : ''}
 `;
 
 export default Input;
