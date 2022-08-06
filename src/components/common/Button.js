@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Button = styled.button`
+    font-family: 'Lexend Deca', sans-serif;
     width: 84px;
     height: 35px;
     background-color: rgba(82, 182, 255, 1);

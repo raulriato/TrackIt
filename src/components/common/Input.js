@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Input = styled.input`
+    font-family: 'Lexend Deca', sans-serif;
     width: 303px;
     height: 45px;
     color: rgba(102, 102, 102, 1);

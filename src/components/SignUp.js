@@ -87,7 +87,7 @@ export default function SignUp(){
                 />
                 <Button large disabled={disabled}>{disabled ? <ThreeDots color='white' width={45} height={45} /> : 'Cadastrar' }</Button>
             </form>
-            <Link to='/'>
+            <Link to='/login'>
                 <StyledLink>Já tem uma conta? Faça login!</StyledLink>
             </Link>
         </Wrapper>
