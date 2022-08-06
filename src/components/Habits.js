@@ -33,7 +33,7 @@ export default function Habits() {
 }
 
 const Wrapper = styled.div`
-    margin-top: 70px;
+    margin: 70px 0;
     padding: 0 17.5px;
 
     p {

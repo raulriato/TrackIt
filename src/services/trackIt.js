@@ -13,7 +13,6 @@ function postLogin(login) {
 }
 
 function getHabits(config) {
-    console.log(config);
     const promise = axios.get(`${BASE_URL}/habits`, config);
     return promise;
 }

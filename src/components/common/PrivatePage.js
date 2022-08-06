@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useLocal } from "../../hooks/useLocal";
+import Footer from "./Footer";
 import Header from "./Header";
 
 
@@ -11,11 +12,12 @@ const { image } = useLocal();
         <Wrapper>
             <Header userImage={image} />
             {children}
+            <Footer />
         </Wrapper>
     )
 }
 
 const Wrapper = styled.div`
-    height: 100vh;
+    height: calc(100vh - 140px);
     background-color: rgb(242, 242, 242);
 `;

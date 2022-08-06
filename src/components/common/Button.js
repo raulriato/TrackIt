@@ -24,6 +24,7 @@ const Button = styled.button`
     ${({ small }) => small ? `
         width: 40px;
         font-size: 26.98px;
+        padding-bottom: 4px;
     `: ''}
 
     ${({ disabled }) => disabled ? `
