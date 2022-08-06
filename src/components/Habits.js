@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { useLocal } from "../hooks/useLocal";
+import { useLocal } from "../hooks";
 import { getHabits } from "../services/trackIt";
 import { useState, useEffect } from "react";
 import { Button, Habit } from "./common";
 import Navbar from "./Navbar";
+import Day from "./common/Day";
 
 export default function Habits() {
 
@@ -33,8 +34,13 @@ export default function Habits() {
 }
 
 const Wrapper = styled.div`
+    width: 100%;
+    height: 100%;
     margin: 70px 0;
     padding: 0 17.5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     p {
         color: rgba(102, 102, 102, 1);

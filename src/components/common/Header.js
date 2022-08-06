@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useLocal } from "../../hooks/useLocal";
+import { useLocal } from "../../hooks";
 
 export default function Header({ userImage }){
 

@@ -2,11 +2,12 @@ import styled from "styled-components";
 
 const Input = styled.input`
     font-family: 'Lexend Deca', sans-serif;
-    width: 303px;
+    width: 80vw;
     height: 45px;
     color: rgba(102, 102, 102, 1);
     font-size: 19.98px;
     border: 1px solid rgba(212, 212, 212, 1);
+    border-radius: 5px;
     padding-left: 10px;
 
     &::placeholder {
