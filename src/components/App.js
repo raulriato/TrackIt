@@ -15,13 +15,13 @@ export default function App() {
             <GlobalStyle />
             <BrowserRouter>
                 <Routes>
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/sign-up' element={<SignUp />} />
                     <Route path='/' element={
                         <PrivatePage>
                             <Habits />
                         </PrivatePage>
                     } />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/sign-up' element={<SignUp />} />
                     <Route path='/today' element={
                         <PrivatePage>
                             <Today />

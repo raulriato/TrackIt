@@ -13,7 +13,6 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
 
     const [disabled, setDisabled] = useState(false);
     const [habitInfo, setHabitInfo] = useState({ ...ongoingCreate })
-    let markedDay;
 
     const verifyMarkedDay = index => days?.filter(day => day === index).length > 0;
     const week = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
@@ -33,11 +32,15 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
     function handleSave() {
 
         if(habitInfo.days.length === 0 || habitInfo.name === ''){
-            alert('Você precisa preencher o nome do hábito e selecionar ao menos um dia para criá-lo')
+
+            alert('Você precisa preencher o nome do hábito e selecionar ao menos um dia para criá-lo');
+
         } else {
+
             setDisabled(!disabled);
             const body = habitInfo;
             
+
             postNewHabit(body, token).then(response => {
                 setHabits([...habits, response.data]);
                 setCreateDisabled(false);
@@ -47,8 +50,8 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
                     days: []
                 })
             })
-            
-            postNewHabit(body, token).catch(() => {
+
+            .catch(() => {
                 alert('não foi possível criar o hábito! Preencha os dados corretamente');
                 setDisabled(false);
             })

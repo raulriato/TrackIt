@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { ThreeDots } from 'react-loader-spinner'
 import { Button, Input, StyledLink } from "./common";
 import logo from '../assets/images/logo.png';
+import { postSignUp } from "../services/trackIt";
 
 
 
@@ -30,17 +30,18 @@ export default function SignUp(){
     function handleForm(e){
         e.preventDefault();
         setDisabled(!disabled);
-        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', signUp);
-        promise.then(response => {
+        postSignUp(signUp).then(() => {
             navigate('/')
         })
 
-        promise.catch(response => {
+        .catch(response => {
             if(response.response.status === 409){
                 alert('Esse email já possui cadastro');
                 setDisabled(false);
                 return;
             }
+            alert('Não foi possível fazer o cadastro! Verifique os dados preenchidos');
+            setDisabled(false);
         })
     }
 
@@ -83,7 +84,7 @@ export default function SignUp(){
                 value={signUp.image}
                 required
                 disabled={disabled}
-                pattern={`(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))`}
+                pattern={`(http)?s?:?([^"']\/*(?:png|jpg|jpeg|gif|png|svg))`}
                 />
                 <Button large disabled={disabled}>{disabled ? <ThreeDots color='white' width={45} height={45} /> : 'Cadastrar' }</Button>
             </form>

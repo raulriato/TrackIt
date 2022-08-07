@@ -1,12 +1,31 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function Footer() {
 
+    const navigate = useNavigate();
+
     return (
         <Wrapper>
-            <span>Hábitos</span>
-            <TodayButton>Hoje</TodayButton>
-            <span>Histórico</span>
+            <span onClick={() => navigate('/')}>Hábitos</span>
+            <TodayDiv onClick={() => navigate('/today')}>
+                <CircularProgressbar
+                    value={35}
+                    text={`Hoje`}
+                    background
+                    backgroundPadding={6}
+                    styles={buildStyles({
+                        strokeLinecap: 'round',
+                        backgroundColor: "rgba(82, 182, 255, 1)",
+                        textColor: "#fff",
+                        pathColor: "#fff",
+                        trailColor: "transparent"
+                    })}
+                />
+            </TodayDiv>
+            <span onClick={() => navigate('/history')}>Histórico</span>
         </Wrapper>
     )
 }
@@ -26,12 +45,10 @@ const Wrapper = styled.div`
     left: 0;
 `;
 
-const TodayButton = styled.button`
+const TodayDiv = styled.div`
     width: 91px;
     height: 91px;
-    background-color: rgba(82, 182, 255, 1);
     color: rgba(255, 255, 255, 1);
-    border: none;
     border-radius: 50%;
     font-family: 'Lexend Deca', sans-serif;
     font-size: 17.98px;

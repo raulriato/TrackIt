@@ -38,7 +38,7 @@ export default function Login() {
             navigate('/')
         })
 
-        postLogin(login).catch(response => {
+        .catch(response => {
             switch(response.response.status){
                 case 401:
                     alert('Dados inválidos');
@@ -49,6 +49,10 @@ export default function Login() {
                     alert('Usuário não encontrado');
                     setDisabled(false);
                     break;
+                
+                default:
+                    alert('Dados inválidos');
+                    setDisabled(false);
             }
         })
     }
