@@ -4,8 +4,8 @@ import { useEffect } from "react";
 function useLocal() {
 
   const navigate = useNavigate();
-  
-  const token = JSON.parse(localStorage.getItem("trackitToken"));;
+
+  const token = JSON.parse(localStorage.getItem("trackitToken"));
   const image = localStorage.getItem('trackitImage');
 
   useEffect(() => {

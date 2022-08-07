@@ -4,19 +4,19 @@ import { getHabits } from "../services/trackIt";
 import { useState, useEffect } from "react";
 import { Button, Habit } from "./common";
 import Navbar from "./Navbar";
-import Day from "./common/Day";
 
 export default function Habits() {
 
     const { token } = useLocal();
 
+    const [disabled, setDisabled] = useState(false)
     const [habits, setHabits] = useState([]);
-    console.log(habits);
+    const [noHabits, setNoHabits] = useState('');
 
     useEffect(() => {
-        const config = token
-        getHabits(config).then(response => {
+        getHabits(token).then(response => {
             setHabits(response.data);
+            setNoHabits('Você não tem nenhum habito cadastrado ainda. Adicione um hábito para começar a trackear!')
         })
     }, []);
 
@@ -24,11 +24,12 @@ export default function Habits() {
         <Wrapper>
             <Navbar>
                 <span>Meus hábitos</span>
-                <Button small>+</Button>
+                <Button small disabled={disabled} onClick={() => setDisabled(!disabled)} >+</Button>
             </Navbar>
+            {disabled ? <Habit create setCreateDisabled={setDisabled} setHabits={setHabits} habits={habits} /> : ''}
             {habits.length === 0 ? 
-                <p>Você não tem nenhum habito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-            : habits.map(habit => <Habit name={habit.name} days={habit.days} /> )}  
+                <p>{noHabits}</p>
+            : habits.map(habit => <Habit key={habit.id} name={habit.name} days={habit.days} /> )}  
         </Wrapper>
     )
 }

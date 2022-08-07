@@ -32,7 +32,6 @@ export default function SignUp(){
         setDisabled(!disabled);
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', signUp);
         promise.then(response => {
-            console.log(response);
             navigate('/')
         })
 

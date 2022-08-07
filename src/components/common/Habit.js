@@ -3,13 +3,40 @@ import { useState } from "react";
 import Input from "./Input";
 import Day from "./Day";
 import Button from "./Button";
+import { postNewHabit } from "../../services/trackIt";
+import { useLocal } from "../../hooks";
 
-export default function Habit({ create, name, days }) {
+export default function Habit({ create, name, days, setCreateDisabled, setHabits, habits }) {
+
+    const { token } = useLocal();
+
     const [disabled, setDisabled] = useState(false);
     const [habitInfo, setHabitInfo] = useState({
         name: '',
         days: []
     })
+
+    function sahidfjugasi(index){
+        for(let i = 0; i < days?.length; i++){
+            if(days[i] === index){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const week = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
+
+    function handleSave() {
+        setDisabled(!disabled);
+        const body = habitInfo;
+        
+        postNewHabit(body, token).then(response => {
+            setHabits([...habits, response.data]);
+            setCreateDisabled(false);
+        })
+
+    }
 
     function handleInput(e) {
         setHabitInfo({
@@ -32,30 +59,46 @@ export default function Habit({ create, name, days }) {
                             disabled={disabled}
                         />
                         <span>
-                            <Day>D</Day>
-                            <Day>S</Day>
-                            <Day>T</Day>
-                            <Day>Q</Day>
-                            <Day>Q</Day>
-                            <Day>S</Day>
-                            <Day>S</Day>
+                            {week.map((day, index) => (
+                                <Day
+                                    key={index}
+                                    i={index}
+                                    habitInfo={habitInfo}
+                                    setHabitInfo={setHabitInfo}
+                                    disabled={disabled}
+                                >
+                                    {day}
+                                </Day>
+                            ))}
                         </span>
                         <div>
-                            <span>Cancelar</span>
-                            <Button>Salvar</Button>
+                            <span onClick={() => setCreateDisabled(false)}>Cancelar</span>
+                            <Button disabled={disabled} onClick={handleSave} >Salvar</Button>
                         </div>
                     </>
                     :
                     <>
-                        <span>Ler 1 capítulo de um livro</span>
+                        <span>{name}</span>
                         <span>
-                            <Day>D</Day>
-                            <Day>S</Day>
-                            <Day>T</Day>
-                            <Day>Q</Day>
-                            <Day>Q</Day>
-                            <Day>S</Day>
-                            <Day>S</Day>
+                            {week.map((day, index) => {
+                                
+                                const markedDay = sahidfjugasi(index);
+
+                                return (
+                                    <Day
+                                        key={index}
+                                        i={index}
+                                        habitInfo={habitInfo}
+                                        setHabitInfo={setHabitInfo}
+                                        markedDay={markedDay}
+                                        buttonOff
+                                    >
+                                        {day}
+                                    </Day>
+
+                                )
+                            }
+                            )}
                         </span>
                         <ion-icon name="trash-outline"></ion-icon>
                     </>
