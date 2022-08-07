@@ -7,7 +7,7 @@ import { postNewHabit, deleteHabit } from "../../services/trackIt";
 import { useLocal } from "../../hooks";
 import { ThreeDots } from "react-loader-spinner";
 
-export default function Habit({ create, name, days, setCreateDisabled, setHabits, habits, habitId, setDeleted, deleted }) {
+export default function Habit({ create, name, days, setCreateDisabled, setHabits, habits, habitId }) {
 
     const { token } = useLocal();
 
@@ -32,10 +32,10 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
         setDisabled(!disabled);
         const body = habitInfo;
         
-        // postNewHabit(body, token).then(response => {
-        //     setHabits([...habits, response.data]);
-        //     setCreateDisabled(false);
-        // })
+        postNewHabit(body, token).then(response => {
+            setHabits([...habits, response.data]);
+            setCreateDisabled(false);
+        })
 
     }
 
@@ -48,7 +48,7 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
 
     function handleDelete(){
         deleteHabit(token, habitId).then(() => {
-            setDeleted(!deleted);
+            setHabits(habits.filter(habit => habit.id !== habitId));
         })
     }
 

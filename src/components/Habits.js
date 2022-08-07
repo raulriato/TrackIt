@@ -12,14 +12,13 @@ export default function Habits() {
     const [disabled, setDisabled] = useState(false)
     const [habits, setHabits] = useState([]);
     const [noHabits, setNoHabits] = useState('');
-    const [deleted, setDeleted] = useState(false);
 
     useEffect(() => {
         getHabits(token).then(response => {
             setHabits(response.data);
             setNoHabits('Você não tem nenhum habito cadastrado ainda. Adicione um hábito para começar a trackear!')
         })
-    }, [deleted]);
+    }, []);
 
     return (
         <Wrapper>
@@ -36,8 +35,8 @@ export default function Habits() {
                         name={habit.name}
                         days={habit.days}
                         habitId={habit.id}
-                        deleted={deleted}
-                        setDeleted={setDeleted}
+                        setHabits={setHabits}
+                        habits={habits}
                     />
                 ))}
         </Wrapper>
