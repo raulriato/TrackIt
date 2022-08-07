@@ -7,6 +7,7 @@ const Button = styled.button`
     background-color: rgba(82, 182, 255, 1);
     border-radius: 4.64px;
     font-size: 15.98px;
+    position: relative;
     border: none;
     display: flex;
     justify-content: center;
@@ -30,6 +31,14 @@ const Button = styled.button`
     ${({ disabled }) => disabled ? `
         opacity: 0.7;
         cursor: initial;
+
+        svg {
+            width: 45px;
+            height: 45px;
+            position: absolute;
+            right: calc(50% - 45px/2);
+            bottom: calc(50% - 45px/2);
+        }
     ` : ''}
 `;
 

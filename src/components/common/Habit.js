@@ -3,10 +3,11 @@ import { useState } from "react";
 import Input from "./Input";
 import Day from "./Day";
 import Button from "./Button";
-import { postNewHabit } from "../../services/trackIt";
+import { postNewHabit, deleteHabit } from "../../services/trackIt";
 import { useLocal } from "../../hooks";
+import { ThreeDots } from "react-loader-spinner";
 
-export default function Habit({ create, name, days, setCreateDisabled, setHabits, habits }) {
+export default function Habit({ create, name, days, setCreateDisabled, setHabits, habits, habitId, setDeleted, deleted }) {
 
     const { token } = useLocal();
 
@@ -31,10 +32,10 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
         setDisabled(!disabled);
         const body = habitInfo;
         
-        postNewHabit(body, token).then(response => {
-            setHabits([...habits, response.data]);
-            setCreateDisabled(false);
-        })
+        // postNewHabit(body, token).then(response => {
+        //     setHabits([...habits, response.data]);
+        //     setCreateDisabled(false);
+        // })
 
     }
 
@@ -42,6 +43,12 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
         setHabitInfo({
             ...habitInfo,
             [e.target.name]: e.target.value
+        })
+    }
+
+    function handleDelete(){
+        deleteHabit(token, habitId).then(() => {
+            setDeleted(!deleted);
         })
     }
 
@@ -73,7 +80,7 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
                         </span>
                         <div>
                             <span onClick={() => setCreateDisabled(false)}>Cancelar</span>
-                            <Button disabled={disabled} onClick={handleSave} >Salvar</Button>
+                            <Button disabled={disabled} onClick={handleSave} >{disabled ? <ThreeDots color='white' width={30} height={30} /> : 'Salvar'}</Button>
                         </div>
                     </>
                     :
@@ -100,7 +107,7 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
                             }
                             )}
                         </span>
-                        <ion-icon name="trash-outline"></ion-icon>
+                        <ion-icon name="trash-outline" onClick={handleDelete}></ion-icon>
                     </>
             }
         </Wrapper>
@@ -119,14 +126,14 @@ const Wrapper = styled.div`
     margin-bottom: 10px;
 
     div {
-        width: 176px;
+        width: 100%;
         height: 35px;
-        position: absolute;
         bottom: 15px;
         right: 16px;
         display: flex;
-        justify-content: space-between;
+        justify-content: end;
         align-items: center;
+        margin-top: 29px;
     }
 
     div > span {
@@ -146,4 +153,8 @@ const Wrapper = styled.div`
         height: 180px;
         margin-bottom: 29px;
     `: ''}
+
+    div > button {
+        margin: 0 16px 0 23px;
+    }
 `;
