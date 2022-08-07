@@ -83,6 +83,7 @@ export default function SignUp(){
                 value={signUp.image}
                 required
                 disabled={disabled}
+                pattern={`(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))`}
                 />
                 <Button large disabled={disabled}>{disabled ? <ThreeDots color='white' width={45} height={45} /> : 'Cadastrar' }</Button>
             </form>

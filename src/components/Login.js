@@ -37,6 +37,20 @@ export default function Login() {
             localStorage.setItem('trackitImage', response.data.image)
             navigate('/')
         })
+
+        postLogin(login).catch(response => {
+            switch(response.response.status){
+                case 401:
+                    alert('Dados inválidos');
+                    setDisabled(false);
+                    break;
+                
+                case 422:
+                    alert('Usuário não encontrado');
+                    setDisabled(false);
+                    break;
+            }
+        })
     }
 
     return (

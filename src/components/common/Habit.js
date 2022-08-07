@@ -16,16 +16,6 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
     let markedDay;
 
     const verifyMarkedDay = index => days?.filter(day => day === index).length > 0;
-        // for(let i = 0; i < days?.length; i++){
-        //     if(days[i] === index){
-        //         return true;
-        //     }
-        // }
-        // return false;
-
-        
-    
-
     const week = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 
     function handleInput(e) {
@@ -47,14 +37,21 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
         postNewHabit(body, token).then(response => {
             setHabits([...habits, response.data]);
             setCreateDisabled(false);
+            setOngoingCreate({
+                ...ongoingCreate,
+                name: '',
+                days: []
+            })
         })
 
     }
 
     function handleDelete(){
-        deleteHabit(token, habitId).then(() => {
-            setHabits(habits.filter(habit => habit.id !== habitId));
-        })
+        if(window.confirm('Você realmente deseja apagar esse hábito?')){
+            deleteHabit(token, habitId).then(() => {
+                setHabits(habits.filter(habit => habit.id !== habitId));
+            })
+        }
     }
 
     return (
@@ -72,8 +69,6 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
                         />
                         <span>
                             {week.map((day, index) => {
-                                
-                                markedDay = verifyMarkedDay(index);
                                 return (
                                 <Day
                                     key={index}
@@ -83,7 +78,7 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
                                     disabled={disabled}
                                     ongoingCreate={ongoingCreate}
                                     setOngoingCreate={setOngoingCreate}
-                                    markedDay={markedDay}
+                                    markedDay={verifyMarkedDay(index)}
                                 >
                                     {day}
                                 </Day>
@@ -99,13 +94,11 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
                         <span>{name}</span>
                         <span>
                             {week.map((day, index) => {
-                                
-                                markedDay = verifyMarkedDay(index);
 
                                 return (
                                     <Day
                                         key={index}
-                                        markedDay={markedDay}
+                                        markedDay={verifyMarkedDay(index)}
                                         buttonOff
                                     >
                                         {day}
