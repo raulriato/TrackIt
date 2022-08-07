@@ -7,7 +7,7 @@ import { postNewHabit, deleteHabit } from "../../services/trackIt";
 import { useLocal } from "../../hooks";
 import { ThreeDots } from "react-loader-spinner";
 
-export default function Habit({ create, name, days, setCreateDisabled, setHabits, habits, habitId, ongoingCreate, setOngoingCreate }) {
+export default function Habit({ create, today, name, days, setCreateDisabled, setHabits, habits, habitId, ongoingCreate, setOngoingCreate }) {
 
     const { token } = useLocal();
 
@@ -31,7 +31,7 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
 
     function handleSave() {
 
-        if(habitInfo.days.length === 0 || habitInfo.name === ''){
+        if (habitInfo.days.length === 0 || habitInfo.name === '') {
 
             alert('Você precisa preencher o nome do hábito e selecionar ao menos um dia para criá-lo');
 
@@ -39,7 +39,7 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
 
             setDisabled(!disabled);
             const body = habitInfo;
-            
+
 
             postNewHabit(body, token).then(response => {
                 setHabits([...habits, response.data]);
@@ -51,15 +51,15 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
                 })
             })
 
-            .catch(() => {
-                alert('não foi possível criar o hábito! Preencha os dados corretamente');
-                setDisabled(false);
-            })
+                .catch(() => {
+                    alert('não foi possível criar o hábito! Preencha os dados corretamente');
+                    setDisabled(false);
+                })
         }
     }
 
-    function handleDelete(){
-        if(window.confirm('Você realmente deseja apagar esse hábito?')){
+    function handleDelete() {
+        if (window.confirm('Você realmente deseja apagar esse hábito?')) {
             deleteHabit(token, habitId).then(() => {
                 setHabits(habits.filter(habit => habit.id !== habitId));
             })
@@ -81,19 +81,20 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
                         <span>
                             {week.map((day, index) => {
                                 return (
-                                <Day
-                                    key={index}
-                                    i={index}
-                                    habitInfo={habitInfo}
-                                    setHabitInfo={setHabitInfo}
-                                    disabled={disabled}
-                                    ongoingCreate={ongoingCreate}
-                                    setOngoingCreate={setOngoingCreate}
-                                    markedDay={verifyMarkedDay(index)}
-                                >
-                                    {day}
-                                </Day>
-                            )})}
+                                    <Day
+                                        key={index}
+                                        i={index}
+                                        habitInfo={habitInfo}
+                                        setHabitInfo={setHabitInfo}
+                                        disabled={disabled}
+                                        ongoingCreate={ongoingCreate}
+                                        setOngoingCreate={setOngoingCreate}
+                                        markedDay={verifyMarkedDay(index)}
+                                    >
+                                        {day}
+                                    </Day>
+                                )
+                            })}
                         </span>
                         <div>
                             <span onClick={() => setCreateDisabled(false)}>Cancelar</span>
@@ -139,8 +140,6 @@ const Wrapper = styled.div`
     div {
         width: 100%;
         height: 35px;
-        bottom: 15px;
-        right: 16px;
         display: flex;
         justify-content: end;
         align-items: center;
@@ -152,7 +151,7 @@ const Wrapper = styled.div`
         color: rgba(82, 182, 255, 1);
     }
 
-    ion-icon {
+    ion-icon[name="trash-outline"] {
         width: 13px;
         height: 15px;
         position: absolute;

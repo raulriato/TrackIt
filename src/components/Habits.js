@@ -26,8 +26,8 @@ export default function Habits() {
 
     return (
         <Wrapper>
-            <Navbar>
-                <span>Meus hábitos</span>
+            <Navbar habits>
+                <h1>Meus hábitos</h1>
                 <Button small disabled={disabled} onClick={() => setDisabled(!disabled)} >+</Button>
             </Navbar>
             {disabled ? <Habit
