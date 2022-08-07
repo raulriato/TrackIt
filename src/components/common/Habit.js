@@ -31,19 +31,28 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
     }
 
     function handleSave() {
-        setDisabled(!disabled);
-        const body = habitInfo;
-        
-        postNewHabit(body, token).then(response => {
-            setHabits([...habits, response.data]);
-            setCreateDisabled(false);
-            setOngoingCreate({
-                ...ongoingCreate,
-                name: '',
-                days: []
-            })
-        })
 
+        if(habitInfo.days.length === 0 || habitInfo.name === ''){
+            alert('Você precisa preencher o nome do hábito e selecionar ao menos um dia para criá-lo')
+        } else {
+            setDisabled(!disabled);
+            const body = habitInfo;
+            
+            postNewHabit(body, token).then(response => {
+                setHabits([...habits, response.data]);
+                setCreateDisabled(false);
+                setOngoingCreate({
+                    ...ongoingCreate,
+                    name: '',
+                    days: []
+                })
+            })
+            
+            postNewHabit(body, token).catch(() => {
+                alert('não foi possível criar o hábito! Preencha os dados corretamente');
+                setDisabled(false);
+            })
+        }
     }
 
     function handleDelete(){
@@ -64,7 +73,6 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
                             name='name'
                             onChange={handleInput}
                             value={habitInfo.name}
-                            required
                             disabled={disabled}
                         />
                         <span>

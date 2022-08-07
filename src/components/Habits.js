@@ -56,12 +56,12 @@ export default function Habits() {
 
 const Wrapper = styled.div`
     width: 100%;
-    height: 100%;
     margin: 70px 0;
     padding: 0 17.5px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: auto;
 
     p {
         color: rgba(102, 102, 102, 1);
