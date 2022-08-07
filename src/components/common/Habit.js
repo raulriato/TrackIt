@@ -7,26 +7,38 @@ import { postNewHabit, deleteHabit } from "../../services/trackIt";
 import { useLocal } from "../../hooks";
 import { ThreeDots } from "react-loader-spinner";
 
-export default function Habit({ create, name, days, setCreateDisabled, setHabits, habits, habitId }) {
+export default function Habit({ create, name, days, setCreateDisabled, setHabits, habits, habitId, ongoingCreate, setOngoingCreate }) {
 
     const { token } = useLocal();
 
     const [disabled, setDisabled] = useState(false);
-    const [habitInfo, setHabitInfo] = useState({
-        name: '',
-        days: []
-    })
+    const [habitInfo, setHabitInfo] = useState({ ...ongoingCreate })
+    let markedDay;
 
-    function sahidfjugasi(index){
-        for(let i = 0; i < days?.length; i++){
-            if(days[i] === index){
-                return true;
-            }
-        }
-        return false;
-    }
+    const verifyMarkedDay = index => days?.filter(day => day === index).length > 0;
+        // for(let i = 0; i < days?.length; i++){
+        //     if(days[i] === index){
+        //         return true;
+        //     }
+        // }
+        // return false;
+
+        
+    
 
     const week = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
+
+    function handleInput(e) {
+        setHabitInfo({
+            ...habitInfo,
+            [e.target.name]: e.target.value
+        })
+
+        setOngoingCreate({
+            ...ongoingCreate,
+            [e.target.name]: e.target.value
+        })
+    }
 
     function handleSave() {
         setDisabled(!disabled);
@@ -37,13 +49,6 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
             setCreateDisabled(false);
         })
 
-    }
-
-    function handleInput(e) {
-        setHabitInfo({
-            ...habitInfo,
-            [e.target.name]: e.target.value
-        })
     }
 
     function handleDelete(){
@@ -66,17 +71,23 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
                             disabled={disabled}
                         />
                         <span>
-                            {week.map((day, index) => (
+                            {week.map((day, index) => {
+                                
+                                markedDay = verifyMarkedDay(index);
+                                return (
                                 <Day
                                     key={index}
                                     i={index}
                                     habitInfo={habitInfo}
                                     setHabitInfo={setHabitInfo}
                                     disabled={disabled}
+                                    ongoingCreate={ongoingCreate}
+                                    setOngoingCreate={setOngoingCreate}
+                                    markedDay={markedDay}
                                 >
                                     {day}
                                 </Day>
-                            ))}
+                            )})}
                         </span>
                         <div>
                             <span onClick={() => setCreateDisabled(false)}>Cancelar</span>
@@ -89,20 +100,16 @@ export default function Habit({ create, name, days, setCreateDisabled, setHabits
                         <span>
                             {week.map((day, index) => {
                                 
-                                const markedDay = sahidfjugasi(index);
+                                markedDay = verifyMarkedDay(index);
 
                                 return (
                                     <Day
                                         key={index}
-                                        i={index}
-                                        habitInfo={habitInfo}
-                                        setHabitInfo={setHabitInfo}
                                         markedDay={markedDay}
                                         buttonOff
                                     >
                                         {day}
                                     </Day>
-
                                 )
                             }
                             )}

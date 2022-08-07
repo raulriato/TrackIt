@@ -1,22 +1,30 @@
 import styled from "styled-components";
 import { useState } from "react";
 
-export default function Day({ children, i, habitInfo, setHabitInfo, disabled, markedDay, buttonOff }) {
+export default function Day({ children, i, habitInfo, setHabitInfo, disabled, markedDay, buttonOff, ongoingCreate, setOngoingCreate }) {
 
     const [selected, setSelected] = useState(false);
 
     function handleClick() {
 
-        let selectedDays = habitInfo.days;
+        let selectedDays = habitInfo?.days;
         if(!buttonOff){
             if (!selected && !selectedDays.includes[i]) {
                 setHabitInfo({
                     ...habitInfo,
                     days: [...selectedDays, i]
                 })
+                setOngoingCreate({
+                    ...habitInfo,
+                    days: [...selectedDays, i]
+                })
             } else {
                 setHabitInfo({
-                    ...habitInfo,
+                    ...ongoingCreate,
+                    days: selectedDays.filter(day => day !== i)
+                })
+                setOngoingCreate({
+                    ...ongoingCreate,
                     days: selectedDays.filter(day => day !== i)
                 })
             }

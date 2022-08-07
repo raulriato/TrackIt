@@ -12,6 +12,10 @@ export default function Habits() {
     const [disabled, setDisabled] = useState(false)
     const [habits, setHabits] = useState([]);
     const [noHabits, setNoHabits] = useState('');
+    const [ongoingCreate, setOngoingCreate] = useState({
+        name: '',
+        days: []
+    })
 
     useEffect(() => {
         getHabits(token).then(response => {
@@ -26,7 +30,14 @@ export default function Habits() {
                 <span>Meus hábitos</span>
                 <Button small disabled={disabled} onClick={() => setDisabled(!disabled)} >+</Button>
             </Navbar>
-            {disabled ? <Habit create setCreateDisabled={setDisabled} setHabits={setHabits} habits={habits} /> : ''}
+            {disabled ? <Habit
+            create
+            setCreateDisabled={setDisabled}
+            setHabits={setHabits}
+            habits={habits}
+            ongoingCreate={ongoingCreate}
+            setOngoingCreate={setOngoingCreate}
+            days={ongoingCreate.days} /> : ''}
             {habits.length === 0 ?
                 <p>{noHabits}</p>
                 : habits.map(habit => (
