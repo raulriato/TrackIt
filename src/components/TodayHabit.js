@@ -99,6 +99,6 @@ const Wrapper = styled.div`
     }
 
     h5 {
-        color: ${({ current, highest }) => current === highest && current !== 0 ? 'rgba(143, 197, 73, 1)' : 'rgba(102, 102, 102, 1)'}
+        color: ${({ current, highest, checked }) => current === highest && checked ? 'rgba(143, 197, 73, 1)' : 'rgba(102, 102, 102, 1)'}
     }
 `;

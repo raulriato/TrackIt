@@ -23,7 +23,6 @@ export default function Today() {
 
     useEffect(() => {
         getTodayHabits(token).then(response => {
-
             const doneHabitsFromAPI = response.data.filter(habit => !!habit.done)
             const allHabitsFromAPI = response.data
             setHabits(allHabitsFromAPI);
