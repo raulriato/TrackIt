@@ -9,6 +9,7 @@ export default function TodayHabit({ name, habitId, habits, setHabits, done, cur
 
     const { token } = useLocal();
     const { setPercentage } = useContext(UserContext);
+    
     const [current, setCurrent] = useState(currentSequence);
     const [highest, setHighest] = useState(highestSequence);
 
@@ -28,7 +29,7 @@ export default function TodayHabit({ name, habitId, habits, setHabits, done, cur
                 setCurrent(current - 1);
             })
 
-            // .catch(() => alert('Algo deu errado! Tente novamente'));
+            .catch(() => alert('Algo deu errado! Tente novamente'));
         } else {
             postCheckHabit(token, habitId).then(() => {
                 setHabits(habits.map(habit => habit.id === habitId ? habit = {
