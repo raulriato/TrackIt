@@ -31,7 +31,7 @@ export default function SignUp(){
         e.preventDefault();
         setDisabled(!disabled);
         postSignUp(signUp).then(() => {
-            navigate('/')
+            navigate('/login')
         })
 
         .catch(response => {
@@ -84,7 +84,7 @@ export default function SignUp(){
                 value={signUp.image}
                 required
                 disabled={disabled}
-                pattern={`(http)?s?:?([^"']\/*(?:png|jpg|jpeg|gif|png|svg))`}
+                pattern={`(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))`}
                 />
                 <Button large disabled={disabled}>{disabled ? <ThreeDots color='white' width={45} height={45} /> : 'Cadastrar' }</Button>
             </form>

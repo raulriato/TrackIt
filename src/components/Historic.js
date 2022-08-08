@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Navbar from './Navbar';
 
 export default function Historic(){
-
     return (
         <Wrapper>
             <Navbar habits>
