@@ -1,13 +1,18 @@
 import styled from "styled-components";
 import { useLocal } from "../hooks";
-import { getHabits } from "../services/trackIt";
+import { getHabits, getTodayHabits } from "../services/trackIt";
 import { useState, useEffect } from "react";
 import { Button, Habit } from "./common";
 import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import UserContext from "../contexts/UserContext";
 
 export default function Habits() {
 
     const { token } = useLocal();
+    const navigate = useNavigate();
+    const { setPercentage } = useContext(UserContext);
 
     const [disabled, setDisabled] = useState(false)
     const [habits, setHabits] = useState([]);
@@ -22,6 +27,24 @@ export default function Habits() {
             setHabits(response.data);
             setNoHabits('Você não tem nenhum habito cadastrado ainda. Adicione um hábito para começar a trackear!')
         })
+
+        .catch(() => {
+            localStorage.removeItem('trackitImage');
+            localStorage.removeItem('trackitToken');
+            navigate('/login')
+        });
+
+        getTodayHabits(token).then(response => {
+            const doneHabitsFromAPI = response.data.filter(habit => !!habit.done)
+            const allHabitsFromAPI = response.data
+            setPercentage(Math.ceil(((doneHabitsFromAPI.length)/allHabitsFromAPI.length)*100));
+        })
+
+        .catch(() => {
+            localStorage.removeItem('trackitImage');
+            localStorage.removeItem('trackitToken');
+            navigate('/login')
+        });
     }, []);
 
     return (

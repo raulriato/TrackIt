@@ -3,13 +3,18 @@ import { useState } from "react";
 import Input from "./Input";
 import Day from "./Day";
 import Button from "./Button";
-import { postNewHabit, deleteHabit } from "../../services/trackIt";
+import { postNewHabit, deleteHabit, getTodayHabits } from "../../services/trackIt";
 import { useLocal } from "../../hooks";
 import { ThreeDots } from "react-loader-spinner";
+import UserContext from "../../contexts/UserContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Habit({ create, today, name, days, setCreateDisabled, setHabits, habits, habitId, ongoingCreate, setOngoingCreate }) {
 
     const { token } = useLocal();
+    const { setPercentage } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const [disabled, setDisabled] = useState(false);
     const [habitInfo, setHabitInfo] = useState({ ...ongoingCreate })
@@ -49,6 +54,19 @@ export default function Habit({ create, today, name, days, setCreateDisabled, se
                     name: '',
                     days: []
                 })
+
+                getTodayHabits(token).then(response => {
+                    const doneHabitsFromAPI = response.data.filter(habit => !!habit.done)
+                    const allHabitsFromAPI = response.data
+                    setPercentage(Math.ceil(((doneHabitsFromAPI.length)/allHabitsFromAPI.length)*100));
+                })
+        
+                .catch(() => {
+                    alert('Algo deu errado, faça login novamente');
+                    localStorage.removeItem('trackitImage');
+                    localStorage.removeItem('trackitToken');
+                    navigate('/login')
+                });
             })
 
                 .catch(() => {
@@ -62,6 +80,19 @@ export default function Habit({ create, today, name, days, setCreateDisabled, se
         if (window.confirm('Você realmente deseja apagar esse hábito?')) {
             deleteHabit(token, habitId).then(() => {
                 setHabits(habits.filter(habit => habit.id !== habitId));
+
+                getTodayHabits(token).then(response => {
+                    const doneHabitsFromAPI = response.data.filter(habit => !!habit.done)
+                    const allHabitsFromAPI = response.data
+                    setPercentage(Math.ceil(((doneHabitsFromAPI.length)/allHabitsFromAPI.length)*100));
+                })
+        
+                .catch(() => {
+                    alert('Algo deu errado, faça login novamente');
+                    localStorage.removeItem('trackitImage');
+                    localStorage.removeItem('trackitToken');
+                    navigate('/login')
+                });
             })
         }
     }

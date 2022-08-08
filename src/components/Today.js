@@ -6,10 +6,13 @@ import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import TodayHabit from "./TodayHabit";
 import Navbar from "./Navbar";
+import UserContext from "../contexts/UserContext";
+import { useContext } from "react";
 
 export default function Today() {
 
     const { token } = useLocal();
+    const { setPercentage } = useContext(UserContext);
     const navigate = useNavigate();
 
     
@@ -20,15 +23,27 @@ export default function Today() {
 
     useEffect(() => {
         getTodayHabits(token).then(response => {
-            setHabits(response.data);
-            setDoneHabits(response.data.filter(habit => !!habit.done))
-            setNoHabits('Você não possui nenhum hábito para hoje! Crie um novo tocando no botão Hábitos')
+
+            const doneHabitsFromAPI = response.data.filter(habit => !!habit.done)
+            const allHabitsFromAPI = response.data
+            setHabits(allHabitsFromAPI);
+            setDoneHabits(doneHabitsFromAPI);
+            setNoHabits('Você não possui nenhum hábito para hoje! Crie um novo tocando no botão Hábitos');
+            setPercentage(Math.ceil(((doneHabitsFromAPI.length)/allHabitsFromAPI.length)*100));
         })
+
+        .catch(() => {
+            alert('Algo deu errado, faça login novamente');
+            localStorage.removeItem('trackitImage');
+            localStorage.removeItem('trackitToken');
+            navigate('/login')
+        });
     }, [])
+
 
     return (
         <Wrapper>
-            <Navbar doneHabits={doneHabits.length > 0} >
+            <Navbar green={doneHabits.length > 0} >
                 <h1>{dayjs().format('dddd, DD/MM')}</h1>
                 <span>{doneHabits.length > 0 ? `${Math.ceil((doneHabits.length/habits.length)*100)}% dos hábitos concluídos` : 'Nenhum hábito concluído ainda'}</span>
             </Navbar>
@@ -39,12 +54,14 @@ export default function Today() {
                         key={habit.id}
                         done={habit.done}
                         currentSequence={habit.currentSequence}
-                        highestSeuquence={habit.highestSeuquence}
+                        highestSequence={habit.highestSequence}
                         name={habit.name}
                         habitId={habit.id}
                         habits={habits}
+                        setHabits={setHabits}
                         doneHabits={doneHabits}
                         setDoneHabits={setDoneHabits}
+                        setNoHabits={setNoHabits}
                     />
                 ))}
         </Wrapper>

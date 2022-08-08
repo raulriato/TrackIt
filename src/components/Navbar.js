@@ -15,11 +15,13 @@ const Navbar = styled.div`
             flex-direction: column;
             padding: 28px 0;
 
-            span {
-                font-size: 17.98px;
-                color: ${({ doneHabits }) => doneHabits ? 'rgba(143, 197, 73, 1)' : 'rgba(186, 186, 186, 1)'};
-            }
+
     ` }
+
+    span {
+        font-size: 17.98px;
+        color: ${({ green }) => green ? 'rgba(143, 197, 73, 1)' : 'rgba(186, 186, 186, 1)'};
+    }
     
     h1 {
         color: rgba(18, 107, 165, 1);
