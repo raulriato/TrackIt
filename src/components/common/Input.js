@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 const Input = styled.input`
     font-family: 'Lexend Deca', sans-serif;
-    width: 80vw;
+    width: 100%;
+    max-width: 303px;
     height: 45px;
     color: rgba(102, 102, 102, 1);
     font-size: 19.98px;

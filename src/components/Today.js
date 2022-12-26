@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useLocal } from "../hooks";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import locale from 'dayjs/locale/pt-br'
 import TodayHabit from "./TodayHabit";
 import Navbar from "./Navbar";
 import UserContext from "../contexts/UserContext";
@@ -14,8 +15,11 @@ export default function Today() {
     const { token } = useLocal();
     const { setPercentage } = useContext(UserContext);
     const navigate = useNavigate();
+    const day = dayjs().locale('pt-br').format('dddd, DD/MM').replace('-feira', '');
 
-    
+    String.prototype.capitalize = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    }
 
     const [habits, setHabits] = useState([]);
     const [noHabits, setNoHabits] = useState('');
@@ -43,7 +47,7 @@ export default function Today() {
     return (
         <Wrapper>
             <Navbar green={doneHabits.length > 0} >
-                <h1>{dayjs().format('dddd, DD/MM')}</h1>
+                <h1>{day.capitalize()}</h1>
                 <span>{doneHabits.length > 0 ? `${Math.ceil((doneHabits.length/habits.length)*100)}% dos hábitos concluídos` : 'Nenhum hábito concluído ainda'}</span>
             </Navbar>
             {habits.length === 0 ?

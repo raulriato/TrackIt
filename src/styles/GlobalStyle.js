@@ -57,5 +57,11 @@ a {
 body {
     font-family: 'Lexend Deca', sans-serif;
 	color: rgba(102, 102, 102, 1);
+	width: 100vw;
+	height: 100vh;
+}
+
+button {
+	cursor: pointer;
 }
 `;

@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 const Button = styled.button`
     font-family: 'Lexend Deca', sans-serif;
-    width: 84px;
+    width: 100%;
+    max-width: 84px;
     height: 35px;
-    background-color: rgba(82, 182, 255, 1);
+    background-color: rgba(75, 170, 255, 1);
     border-radius: 4.64px;
     font-size: 15.98px;
     position: relative;
@@ -16,14 +17,14 @@ const Button = styled.button`
     cursor: pointer;
 
     ${({ large }) => large ? `
-        width: 303px;
+        max-width: 303px;
         height: 45px;
         font-size: 20.98px;
     `
     : ''}
 
     ${({ small }) => small ? `
-        width: 40px;
+        max-width: 40px;
         font-size: 26.98px;
         padding-bottom: 4px;
     `: ''}

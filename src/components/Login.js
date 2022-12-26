@@ -28,6 +28,7 @@ export default function Login() {
         e.preventDefault();
         setDisabled(!disabled);
         postLogin(login).then(response => {
+            console.log(response.data);
             localStorage.setItem('trackitToken', JSON.stringify({
                 headers: {
                     Authorization: `Bearer ${response.data.token}`
@@ -93,6 +94,8 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 100%;
 
     img {
         margin: 68px 0 40px;
@@ -110,5 +113,6 @@ const Wrapper = styled.div`
         display: flex;
         flex-direction: column; 
         align-items: center;
+        width: 90%;
     }
 `;
