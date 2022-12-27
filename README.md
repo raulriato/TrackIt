@@ -2,7 +2,7 @@
 
 ## About
 
-**TrackIt** is a web app to help you to keep track of your habits. Add your habits and keep tracking of how your doing!
+**TrackIt** is a web app to help you keep tracking of your habits. Add your habits and check how you're doing!
 
 <h1 align="center"><img height="700px" width="323.4375px" src="https://user-images.githubusercontent.com/106850340/209712730-33e6b787-500e-413a-aa06-02829a654fcf.gif" alt=""/></h1>
 
@@ -14,7 +14,7 @@ Try it now: http://track-it-rust-phi.vercel.app/
 - Sign In
 - List of your habits
 - Create a new habit
-- List of habits of the days
+- List of habits of the day
 
 ## Technologies
 
@@ -35,9 +35,9 @@ Try it now: http://track-it-rust-phi.vercel.app/
 ```bash
 npm i
 ```
-3. Run the with
+3. Run the app with
 ```bash
 npm start
 ```
 
-4. Finally access http://localhost:3000 on your favorite browser
+4. Finally, access http://localhost:3000 on your favorite browser
