@@ -4,6 +4,8 @@
 
 **TrackIt** is a web app to help you to keep track of your habits. Add your habits and keep tracking of how your doing!
 
+<h1 align="center"><img height="700px" width="323.4375px" src="https://user-images.githubusercontent.com/106850340/209712730-33e6b787-500e-413a-aa06-02829a654fcf.gif" alt=""/></h1>
+
 Try it now: http://track-it-rust-phi.vercel.app/
 
 ## Features
