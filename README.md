@@ -31,13 +31,28 @@ Try it now: http://track-it-rust-phi.vercel.app/
 ## How to run
 
 1. Clone this repository
+```bash
+# HTTPS
+git clone https://github.com/raulriato/TrackIt.git
+
+# SSH
+git clone git@github.com:raulriato/TrackIt.git
+```
 2. Install dependencies
 ```bash
+# npm
 npm i
+
+# yarn
+yarn
 ```
 3. Run the app with
 ```bash
+# npm
 npm start
+
+# yarn
+yarn start
 ```
 
 4. Finally, access http://localhost:3000 on your favorite browser
